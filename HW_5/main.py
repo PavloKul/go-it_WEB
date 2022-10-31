@@ -38,7 +38,7 @@ if __name__ == '__main__':
     timer=time()
     [pr.start() for pr in processes]
     [pr.join() for pr in processes]
-   # [pr.close() for pr in processes]
+    [pr.close() for pr in processes]
 
     print(f'Time for 3 processes: {time() - timer}')
 
