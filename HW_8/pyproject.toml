@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "hw-8"
+version = "0.1.0"
+description = ""
+authors = ["Pavlo Kulinskyi <pavel.kulinskyi@gmail.com>"]
+readme = "README.md"
+packages = [{include = "hw_8"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+psycopg2 = "^2.9.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
