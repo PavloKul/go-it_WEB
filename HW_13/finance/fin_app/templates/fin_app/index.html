@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Organizer</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <nav style="margin-bottom: 20px; border-bottom: 2px solid; padding-left: 30px">
+        <ul>
+          <li><a href="/income/" role="button">Add income</a></li>
+          <li><a href="/cost/" role="button">Add cost</a></li>
+          <li><a href="/category/" role="button">Add category</a></li>
+          <li><a href="/filter/" role="button">Filter by the date</a></li>
+        </ul>
+      </nav>
+      <h1>Income</h1>
+      {% for income in incomes%}
+      <ul>
+        <li>
+          <a href="/income_detail/{{income.id}}" role="button" class="outline"
+            >{{income.summa}} UAH, {{income.income_date}}</a>
+          <a href="/delete_income/{{income.id}}" role="button" class="contrast"
+            >Delete income</a>
+        </li>
+      </ul>
+      {% endfor %}
+
+      <h1>Costs</h1>
+      {% for cost in costs%}
+      <ul>
+        <li>
+          <a href="/cost_detail/{{cost.id}}" role="button" class="outline"
+            >{{cost.summa}} UAH, {{cost.cost_date}}</a>
+          <a href="/delete_cost/{{cost.id}}" role="button" class="contrast"
+            >Delete cost</a>
+        </li>
+      </ul>
+      {% endfor %}
+    </main>
+  </body>
+</html>
