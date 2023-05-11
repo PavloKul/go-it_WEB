@@ -10,21 +10,21 @@ class Category(models.Model):
 
 
 class Income(models.Model):
-    summa = models.FloatField(max_length=25, null=False)
+    summa = models.FloatField(null=False)
     income_date = models.DateTimeField(auto_now_add=False)
     categories = models.ManyToManyField(Category, through='IncomeToCategory')
 
     def __str__(self):
-        return self.summa
+        return str(self.summa)
 
 
 class Costs(models.Model):
-    summa = models.FloatField(max_length=25, null=False)
-    cost_date = models.DateTimeField(auto_now_add=True)
+    summa = models.FloatField(null=False)
+    cost_date = models.DateTimeField(auto_now_add=False)
     categories = models.ManyToManyField(Category, through='CostsToCategory')
 
     def __str__(self):
-        return self.summa
+        return str(self.summa)
 
 
 class IncomeToCategory(models.Model):

@@ -1,5 +1,5 @@
-from datetime import datetime, date
-
+from datetime import datetime
+from django.db.models import Sum
 from django.shortcuts import render, redirect
 from .models import Category, Income, Costs
 
@@ -41,6 +41,7 @@ def cost(request):
         summa = request.POST['summa']
         cost_date = request.POST['cost_date']
         list_categories = request.POST.getlist('categories')
+        print(type(summa))
         if summa and cost_date:
             categories = Category.objects.filter(name__in=list_categories)
             cost = Costs.objects.create(summa=summa, cost_date=cost_date,)
@@ -54,8 +55,10 @@ def cost(request):
 
 def filter(request):
     if request.method == 'POST':
-        start_date = request.POST['from']
-        end_date = request.POST['to']
+        print(request.POST["from"])
+        print(request.POST['to'])
+        start_date = datetime.strptime(request.POST['from'], '%Y-%m-%dT%H:%M').date()
+        end_date = datetime.strptime(request.POST['to'], '%Y-%m-%dT%H:%M').date()
         print(type(start_date))
         print(end_date)
         # list_categories = request.POST.getlist('categories')
@@ -63,13 +66,15 @@ def filter(request):
             # categories = Category.objects.filter(name__in=list_categories)
             filtered_income = Income.objects.filter(income_date__range=(start_date, end_date))
             filtered_costs = Costs.objects.filter(cost_date__range=(start_date, end_date))
-            income_sum = 0
-            costs_sum = 0
-            for summa in filtered_income:
-                income_sum += summa.summa
-
-            for summa in filtered_costs:
-                costs_sum += summa.summa
+            income_sum = filtered_income.aggregate(Sum('summa'))['summa__sum'] or 0
+            costs_sum = filtered_costs.aggregate(Sum('summa'))['summa__sum'] or 0
+            # income_sum = 0
+            # costs_sum = 0
+            # for summa in filtered_income:
+            #     income_sum += summa.summa
+            #
+            # for summa in filtered_costs:
+            #     costs_sum += summa.summa
 
             # for category in categories.iterator():
             #     cost.categories.add(category)
